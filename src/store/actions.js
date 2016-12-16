@@ -1,7 +1,7 @@
 import * as types from './types'
 import Vue from 'vue'
 
-//购物车
+//卖家
 export const getSeller = ({commit}) => {
 	Vue.http.get("/api/seller")
 	.then(
@@ -14,7 +14,7 @@ export const getSeller = ({commit}) => {
 }
 
 
-//购物车
+//商品
 export const getGoods = ({commit}) => {
 	Vue.http.get("/api/goods")
 	.then(
@@ -27,7 +27,7 @@ export const getGoods = ({commit}) => {
 }
 
 
-//购物车
+//评价
 export const getRatings = ({commit}) => {
 	Vue.http.get("/api/ratings")
 	.then(

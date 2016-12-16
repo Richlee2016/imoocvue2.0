@@ -18,6 +18,7 @@ Vue.use(VueResource);
 const router = new VueRouter({
 	routes:[
 				{ path: '/', component: Goods },
+				{ path: '/goods', component: Goods },
 				{ path: '/evaluate', component: Ratings },
 				{ path: '/seller', component: Seller },
 			]

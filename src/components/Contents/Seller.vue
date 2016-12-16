@@ -1,6 +1,6 @@
 <template>
 	<div class="seller">
-	  商家
+		卖家
 	</div>
 </template>
 
