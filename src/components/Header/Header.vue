@@ -98,9 +98,9 @@ export default {
 }
 .header-news{
 	width: 100%;
-	height: 0.8rem;
+	height: 0.4rem;
 	float: left;
-	line-height: 0.8rem;
+	line-height: 0.4rem;
 	background: rgba(0,0,0,0.2);
 	*{
 		float: left;

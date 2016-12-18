@@ -9,15 +9,17 @@
   	<div class="content">
   		<router-view></router-view>
   	</div>
-  	<div class="footer"></div>
+  	<v-shopcart></v-shopcart>
   </div>
 </template>
 
 <script>
 import Header from './components/Header/Header'
+import Shopcart from './components/multi/shopcar/Shopcart'
 export default {
   components: {
-  	"v-header":Header
+  	"v-header":Header,
+  	"v-shopcart":Shopcart
   },
 }
 </script>
@@ -36,13 +38,6 @@ html,body{
 	width: 100%;
 	top:2.96rem;
 	bottom:1.16rem;
-}
-.footer{
-	width: 100%;
-	height: 1.16rem;
-	position: absolute;
-	left: 0px;
-	bottom:0rem;
 }
 .header{
 	width: 100%;
