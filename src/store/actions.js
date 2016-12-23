@@ -11,7 +11,7 @@ export const getSeller = ({commit}) => {
 			console.log(err)
 		}
 	);
-}
+};
 
 
 //商品
@@ -22,6 +22,18 @@ export const getGoods = ({commit}) => {
 			commit(types.APP_GOODS,{goods: ret.body})
 		},(err) => {
 			console.log(err)
+		}
+	);
+};
+
+//提交购买的商品
+export const buyGoods = ({commit}) => {
+	Vue.http.post("/api/goods/buy")
+	.then(
+		(ret) => {
+			commit(types.APP_GOODS_BUY,{goods: ret.body});
+		},(err) => {
+			console.log(err);
 		}
 	);
 }
@@ -37,7 +49,7 @@ export const getRatings = ({commit}) => {
 			console.log(err)
 		}
 	);
-}
+};
 
 
 

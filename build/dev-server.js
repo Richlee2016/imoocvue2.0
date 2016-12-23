@@ -61,6 +61,14 @@ apiRoutes.get('/ratings', function (req, res) {
 	});
 });
 
+apiRoutes.post('/goods/buy', function (req, res) {
+	res.json({
+		errno: 0,
+		data: "活得购买的东西"
+	});
+});
+
+
 app.use('/api', apiRoutes);
 
 

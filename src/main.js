@@ -8,6 +8,7 @@ import store from './store'
 import Goods from './components/Contents/Goods'
 import Ratings from './components/Contents/Ratings'
 import Seller from './components/Contents/Seller'
+import Detail from './components/Contents/Detail'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
@@ -18,7 +19,15 @@ Vue.use(VueResource);
 const router = new VueRouter({
 	routes:[
 				{ path: '/', component: Goods },
-				{ path: '/goods', component: Goods },
+				{ path: '/goods', component: Goods,
+					children:[
+						{
+							path:'detail/:goodID',
+							name:'detail',
+							component:Detail
+						}
+					]
+				},
 				{ path: '/evaluate', component: Ratings },
 				{ path: '/seller', component: Seller },
 			]

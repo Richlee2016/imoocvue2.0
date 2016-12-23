@@ -1,20 +1,26 @@
 <template>
 	<div class="goods">
+		<transition name="slide-fade">
+		<router-view></router-view>
+		</transition>
+		<!--<router-link :to="{name:'detail',params: { goodID: 123 }}">detail</router-link>-->
 		<div class="goods-nav" ref="menuscroll">
 		  <ul>
-		  	<li 
-		  		v-for='(goods,index) in allGoods' 
-		  		:class="{'active':activeNav === index}" 
+		  	<li
+		  		v-for='(goods,index) in allGoods'
+		  		:class="{'active':activeNav === index}"
 		  		@click="navScroll(index,$event)">{{goods.name}}</li>
 		  </ul>
 		</div>
 	  <div class="goods-wraper" ref="foodsscroll">
 	  <ul>
-	  	<li v-for="goods in allGoods">
+	  	<li v-for="(goods,index) in allGoods">
 	  		<h3>{{goods.name}}</h3>
-	  		<section class="food-wraper" v-for="food in goods.foods">
+	  		
+	  		<section class="food-wraper" v-for="(food,ind) in goods.foods" @click='routerDetail(ind)'>
+	  			<!--<router-link :to="{name:'detail',params: { goodID: ind }}" class="link-a">-->
 	  			<div class="food-left">
-	  				<img :src="food.icon"/>
+	  				<!--<img :src="food.icon"/>-->
 	  			</div>
 	  			<div class="food-right">
 	  				<h3>{{food.name}}</h3>
@@ -24,27 +30,39 @@
 	  					<label>￥{{food.price}}</label>
 	  					<b v-show='food.oldPrice'>￥{{food.oldPrice}}</b>
 	  				</span>
+	  				<v-carcontrol
+	  					@renduce='commitGood({food:food,index:ind})'
+	  					@add='commitGood({food:food,index:ind})'
+	  					ref='goodID'
+	  					></v-carcontrol>
 	  			</div>
+	  			<!--</router-link>-->
 	  		</section>
 	  	</li>
 	  </ul>
 	  </div>
-	  <span class="get" @click="get">get</span>
+	  <!--<span class="get" @click="get">get</span>-->
+	  
 	</div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import * as types from '../../store/types'
 import Bscroll from 'better-scroll'
+import Carcontrol from '../multi/shopcar/Carcontrol'
 export default {
-  data () {
+	components:{
+		"v-carcontrol":Carcontrol
+	},
+  data() {
     return {
     	//good 高度
     	foodHei:[0],
     	//good 滚动Y值
     	scrollY:0
     }
-  },  
+  },
   computed:{
   	//计算滚动得 index
   	activeNav() {
@@ -62,7 +80,7 @@ export default {
   },
   methods:{
   	get() {
-		console.log(this.activeNav);
+		console.log(this.allGoods);
   	},
   	navScroll(index,ev){
   		//处理 iScroll得一种兼容
@@ -94,6 +112,17 @@ export default {
 			totalHei = totalHei + aFoods[i].offsetHeight;
 			this.foodHei.push(totalHei);
 		};
+	},
+	commitGood(food) {
+		//提交商品数
+		let foodAdd = {
+			foodData:food.food,
+			num:this.$refs.goodID[food.index].goodNum
+		}
+		this.$store.commit(types.APP_GOODS_PUSH,{food:foodAdd});
+	},
+	routerDetail(i){
+		console.log(i);
 	}
   },
   //提交　　获取数据
@@ -102,7 +131,7 @@ export default {
   },
   //在dom加载完成之后  进行相应得操作
 　　　mounted(){
-		//暂时没有找到 好的办法解决  异步得问题
+		//暂时没有找到 好的办法解决  异步得问题(暂留问题)
 		let timer = setTimeout(() => {
 			this._initScroll();
 			this._foodHeight();
@@ -114,23 +143,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.link-a{
+	display: block;
+}
 .get{
 	position: fixed;
 	left: 0px;
 	top: 0px;
 }
-.goods{
+/*.goods{
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 	>div{
 		height: 100%;
-		/*overflow-y: auto;
+		overflow-y: auto;
 		&::-webkit-scrollbar{
 			width: 0px;
-		}*/
+		}
 	}
-	>ul{
+	/*>ul{
 		min-height: 100%;
 	}
 	.goods-nav{
@@ -189,5 +221,15 @@ export default {
 			color: #f01414;
 		}
 	}
+}*/
+.slide-fade-enter-active {
+  transition: all 0.4s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.4s ease-in-out;
+}
+.slide-fade-enter, .slide-fade-leave-active {
+  transform: translateX(6.4rem);
+  opacity: 0;
 }
 </style>

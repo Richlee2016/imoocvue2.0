@@ -6,22 +6,44 @@
   		</span>
   	</div>
   	<div class="car-pri">
-  		<p>$132</p>
-  		<span>另需配送费￥4元</span>
+  		<p>${{tatleprice}}</p>
+  		<span>另需配送费￥{{sendPrice}}元</span>
   	</div>
-  	<span class="car-sub">￥20起送</span>
+  	<span class="car-sub" >
+  		<span v-show='tatleprice==0'>${{minPrice}}起送</span>
+  		<span v-show="tatleprice>0 && minPrice-tatleprice>0">还差${{minPrice-tatleprice}}起送</span>
+  		<span v-show="minPrice-tatleprice<=0" @click="subBuygood">结算</span>
+  	</span>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 export default {
-	
+	data(){
+		return{
+			minPrice:40,
+			sendPrice:6
+		}
+	},
+	components:{
+		
+	},
+	methods:{
+		subBuygood(){
+			this.$store.dispatch("buyGoods");
+		}
+	},
+	computed:{
+		...mapGetters({
+			tatleprice:'tatleprice'
+		})
+	}
 }
 </script>
 
 <style lang="scss">
-.shopcart{
+/*.shopcart{
 	width: 100%;
 	height: 1.16rem;
 	position: fixed;
@@ -87,5 +109,5 @@ export default {
 	color: rgba(255,255,255,0.4);
 	text-align: center;
 	line-height: 1.16rem;
-}
+}*/
 </style>
