@@ -1,8 +1,5 @@
 <template>
 	<div class="goods">
-		<transition name="slide-fade">
-		<router-view></router-view>
-		</transition>
 		<!--<router-link :to="{name:'detail',params: { goodID: 123 }}">detail</router-link>-->
 		<div class="goods-nav" ref="menuscroll">
 		  <ul>
@@ -17,8 +14,7 @@
 	  	<li v-for="(goods,index) in allGoods">
 	  		<h3>{{goods.name}}</h3>
 	  		
-	  		<section class="food-wraper" v-for="(food,ind) in goods.foods" @click='routerDetail(ind)'>
-	  			<!--<router-link :to="{name:'detail',params: { goodID: ind }}" class="link-a">-->
+	  		<section class="food-wraper" v-for="(food,ind) in goods.foods" @click='routerDetail(food,$event)'>
 	  			<div class="food-left">
 	  				<!--<img :src="food.icon"/>-->
 	  			</div>
@@ -30,19 +26,22 @@
 	  					<label>￥{{food.price}}</label>
 	  					<b v-show='food.oldPrice'>￥{{food.oldPrice}}</b>
 	  				</span>
-	  				<v-carcontrol
+	  				<v-carcontrol 
 	  					@renduce='commitGood({food:food,index:ind})'
 	  					@add='commitGood({food:food,index:ind})'
 	  					ref='goodID'
 	  					></v-carcontrol>
 	  			</div>
-	  			<!--</router-link>-->
 	  		</section>
 	  	</li>
 	  </ul>
 	  </div>
 	  <!--<span class="get" @click="get">get</span>-->
-	  
+	    
+			<v-detail
+				:detailShow="detailShow"
+				@close='detailShow = false'
+				></v-detail>
 	</div>
 </template>
 
@@ -51,16 +50,20 @@ import {mapGetters} from 'vuex'
 import * as types from '../../store/types'
 import Bscroll from 'better-scroll'
 import Carcontrol from '../multi/shopcar/Carcontrol'
+import Detail from './Detail'
 export default {
 	components:{
-		"v-carcontrol":Carcontrol
+		"v-carcontrol":Carcontrol,
+		"v-detail":Detail
 	},
   data() {
     return {
     	//good 高度
     	foodHei:[0],
     	//good 滚动Y值
-    	scrollY:0
+    	scrollY:0,
+    	//详情数据
+    	detailShow:false
     }
   },
   computed:{
@@ -97,7 +100,8 @@ export default {
   			click:true
   		});
   		this.foodsScroll = new Bscroll(this.$refs.foodsscroll,{
-  			probeType:3
+  			probeType:3,
+			click:true
   		});
 		//滚动监听
 		this.foodsScroll.on('scroll',(pos) => {
@@ -121,8 +125,13 @@ export default {
 		}
 		this.$store.commit(types.APP_GOODS_PUSH,{food:foodAdd});
 	},
-	routerDetail(i){
-		console.log(i);
+	routerDetail(food,ev){
+		if(!ev._constructed){
+  			return;
+  		};
+		this.detailShow = true;
+		//提交详情
+		this.$store.commit(types.APP_GOODS_DETAIL,{food:food});
 	}
   },
   //提交　　获取数据
@@ -222,7 +231,7 @@ export default {
 		}
 	}
 }*/
-.slide-fade-enter-active {
+/*.slide-fade-enter-active {
   transition: all 0.4s ease;
 }
 .slide-fade-leave-active {
@@ -231,5 +240,5 @@ export default {
 .slide-fade-enter, .slide-fade-leave-active {
   transform: translateX(6.4rem);
   opacity: 0;
-}
+}*/
 </style>

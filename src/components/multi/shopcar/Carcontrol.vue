@@ -1,8 +1,8 @@
 <template>
   <div class="carcontrol">
-  	<button @click="reduce">-</button>
+  	<button @click.stop="reduce">-</button>
   	<div>{{goodNum}}</div>
-  	<button @click="add">+</button>
+  	<button @click.stop="add">+</button>
   </div>
 </template>
 

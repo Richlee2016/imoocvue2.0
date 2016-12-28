@@ -5,7 +5,9 @@ const state = {
 	//状态码规定
 	ERR_OK:0,
 	//选定的商品
-	choiceGoods:[]
+	choiceGoods:[],
+	//商品详情
+	detailGoods:{}
 }
 
 const mutations = {
@@ -45,6 +47,15 @@ const mutations = {
 		});
 		//更新数组  使得getter 计算属性
 		state.choiceGoods = countZero;	
+	},
+	//商品详情
+	[types.APP_GOODS_DETAIL] (state,{food}) {
+		//处理时分秒
+		food.ratings = food.ratings.map( (o,i) => {
+							o.rateTime = o.rateTime + "rich";
+							return o;
+						});
+		state.detailGoods = food;
 	}
 }
 
