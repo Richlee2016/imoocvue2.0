@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  	<div style="display: none;">
+  	<div>
   	<v-header></v-header>
   	<ul class="tab">
   		<li><router-link to='/goods'>商品</router-link></li>
@@ -38,7 +38,7 @@ html,body{
 .content{
 	position: absolute;
 	width: 100%;
-	top:2.96rem;
+	top:2.68rem;
 	bottom:1.16rem;
 }
 .header{
@@ -48,12 +48,13 @@ html,body{
 .tab{
 	width: 100%;
 	float: left;
-	height: 0.4rem;
+	height: 0.5rem;
+	border-bottom: #ddd 1px solid;
 	li{
 		width: 33.3%;
 		float: left;
-		height: 0.4rem;
-		line-height: 0.4rem;
+		height: 0.5rem;
+		line-height: 0.5rem;
 		a{
 			display: block;
 			width: 100%;
@@ -62,5 +63,12 @@ html,body{
 			font-size: 0.24rem;
 		}
 	}
+}
+.clear-line{
+    width: 100%;
+    height: 16px;
+    border-top: 1px solid rgba(7,17,27,0.1);
+    border-bottom: 1px solid rgba(7,17,27,0.1);
+    background: #f3f5f7;
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="header">
   	<div class="header-top">
   		<div>
-  			<!--<img src="../../../../vue-tutorial/src/assets/logo.png"/>-->
+  			<img :src="seller.avatar"/>
   		</div>
   		<ul class="header-title">
   			<li class="li01">
@@ -107,6 +107,7 @@ export default {
 	}
 }
 .detail-box{
+	z-index: 200;
 	position: fixed;
 	left: 0px;
 	top: 0px;width: 100%;

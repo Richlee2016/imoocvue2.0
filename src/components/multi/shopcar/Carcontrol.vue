@@ -41,6 +41,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.carcontrol{
+	width: 1.4rem;
+	overflow: hidden;
+	float: right;
+	*{
+		float: left;
+	}
+}
 button{
 	width: 0.4rem;
 	height: 0.4rem;

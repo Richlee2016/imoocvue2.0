@@ -13,7 +13,10 @@
 			<p>{{detailData.description}}</p>
 		</section>
 		<v-rate
-			:ratings="detailData.ratings"
+			:isOut="{star:false,text:false,common:false}"
+			:ratelist="ratelist"
+		  	@isshow="isshow"
+		  	@select="selector"
 			></v-rate>
 	</div>
 	</transition>
@@ -21,6 +24,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import * as types from "../../store/types"
 import Rate from '../multi/rate/Rate'
 export default {
 	components:{
@@ -33,7 +37,8 @@ export default {
 	},
 	computed:{
 		...mapGetters({
-	  		detailData:"detailgoods"
+	  		detailData:"detailgoods",
+	  		ratelist:"goodrate"
 	  	})
 	},
 	props:{
@@ -45,8 +50,17 @@ export default {
 	methods:{
 	  	quit(){
 	  		this.$emit("close");
-	  	}
-	}
+	  	},
+	  	selector(i){
+			this.$store.commit(types.APP_GOODS_RATESELECT,{index:i});
+		},
+		isshow(onOff){
+			this.$store.commit(types.APP_GOODS_RATESHOW,{show:onOff});
+		}
+	},
+    created(){
+  		this.$store.dispatch("getRatings");
+    }
 }
 </script>
 

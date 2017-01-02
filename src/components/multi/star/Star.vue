@@ -11,14 +11,17 @@ const STAR_OFF = "star-off";
 const STAR_HALF = "star-half";
 export default {
 	props:{
+		//星星大小
 		starSize:{
 			type:Number,
 			default:1
 		},
+		//星星个数
 		starAll:{
 			type:Number,
 			default:5
 		},
+		//评分
 		starNum:{
 			type:Number,
 			default:0

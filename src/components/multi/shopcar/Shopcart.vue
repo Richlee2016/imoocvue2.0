@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-/*.shopcart{
+.shopcart{
 	width: 100%;
 	height: 1.16rem;
 	position: fixed;
@@ -109,5 +109,5 @@ export default {
 	color: rgba(255,255,255,0.4);
 	text-align: center;
 	line-height: 1.16rem;
-}*/
+}
 </style>

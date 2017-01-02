@@ -13,7 +13,6 @@
 	  <ul>
 	  	<li v-for="(goods,index) in allGoods">
 	  		<h3>{{goods.name}}</h3>
-	  		
 	  		<section class="food-wraper" v-for="(food,ind) in goods.foods" @click='routerDetail(food,$event)'>
 	  			<div class="food-left">
 	  				<!--<img :src="food.icon"/>-->
@@ -160,7 +159,7 @@ export default {
 	left: 0px;
 	top: 0px;
 }
-/*.goods{
+.goods{
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
@@ -171,7 +170,7 @@ export default {
 			width: 0px;
 		}
 	}
-	/*>ul{
+	>ul{
 		min-height: 100%;
 	}
 	.goods-nav{
@@ -181,6 +180,7 @@ export default {
 		li{
 			width: 100%;
 			height: 1.08rem;
+			line-height: 1.08rem;
 			text-align: center;
 			display: table;
 		}
@@ -217,6 +217,7 @@ export default {
 	}
 	.food-right{
 		float: left;
+		width: 3.12rem;
 		margin-left: 0.2rem;
 		line-height: 0.3rem;
 		h3{
@@ -230,7 +231,7 @@ export default {
 			color: #f01414;
 		}
 	}
-}*/
+}
 /*.slide-fade-enter-active {
   transition: all 0.4s ease;
 }

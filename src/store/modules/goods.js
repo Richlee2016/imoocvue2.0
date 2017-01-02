@@ -1,13 +1,16 @@
 import * as types from '../types'
 const state = {
 	//商品信息
-	goods:{},
+	goods:[],
 	//状态码规定
 	ERR_OK:0,
 	//选定的商品
 	choiceGoods:[],
 	//商品详情
-	detailGoods:{}
+	detailGoods:{},
+	//显示得评价
+	ratings:[],
+	ratedata:[]
 }
 
 const mutations = {
@@ -46,7 +49,7 @@ const mutations = {
 			return o.count !== 0;
 		});
 		//更新数组  使得getter 计算属性
-		state.choiceGoods = countZero;	
+		state.choiceGoods = countZero;
 	},
 	//商品详情
 	[types.APP_GOODS_DETAIL] (state,{food}) {
@@ -56,6 +59,36 @@ const mutations = {
 							return o;
 						});
 		state.detailGoods = food;
+		//评价信息
+		state.ratings = food.ratings;
+		state.ratedata = state.ratings;
+	},
+	[types.APP_GOODS_RATESELECT] (state,{index}) {
+		switch (index){
+			case 0:
+				state.ratedata = state.ratings;
+				break;
+			case 1:
+				state.ratedata = state.ratings.filter((o) => {
+					return o.rateType == 0;
+				});
+				break;
+			case 2:
+				state.ratedata = state.ratings.filter((o) => {
+					return o.rateType == 1;
+				});
+				break;	
+		}
+	},
+	[types.APP_GOODS_RATESHOW] (state,{show}) {
+		console.log(show);
+		if(show){
+			state.ratedata = state.ratedata;
+		}else{
+			state.ratedata = state.ratedata.filter((o) => {
+				return o.text;
+			});
+		};
 	}
 }
 
