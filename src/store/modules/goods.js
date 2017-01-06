@@ -10,7 +10,8 @@ const state = {
 	detailGoods:{},
 	//显示得评价
 	ratings:[],
-	ratedata:[]
+	ratedata:[],
+	rateshow:[]
 }
 
 const mutations = {
@@ -63,33 +64,41 @@ const mutations = {
 		state.ratings = food.ratings;
 		state.ratedata = state.ratings;
 	},
-	[types.APP_GOODS_RATESELECT] (state,{index}) {
-		switch (index){
-			case 0:
-				state.ratedata = state.ratings;
-				break;
-			case 1:
-				state.ratedata = state.ratings.filter((o) => {
-					return o.rateType == 0;
-				});
-				break;
-			case 2:
-				state.ratedata = state.ratings.filter((o) => {
-					return o.rateType == 1;
-				});
-				break;	
+	[types.APP_GOODS_RATESELECT] (state,{index,show}) {	
+		let rateshow = (index) => {
+			switch (index){
+				case 0:
+					state.ratedata = state.rateshow;
+					break;
+				case 1:
+					state.ratedata = state.rateshow.filter((o) => o.rateType == 0);
+					break;
+				case 2:
+					state.ratedata = state.rateshow.filter((o) => o.rateType == 1);
+					break;	
+			}
 		}
-	},
-	[types.APP_GOODS_RATESHOW] (state,{show}) {
-		console.log(show);
+		if(typeof index === 'number'){state.index = index};
 		if(show){
-			state.ratedata = state.ratedata;
+			state.rateshow = state.ratings;
+			rateshow(state.index);
 		}else{
-			state.ratedata = state.ratedata.filter((o) => {
-				return o.text;
-			});
+			state.rateshow = state.ratings.filter((o) => o.text);
+			rateshow(state.index);
 		};
-	}
+		
+		
+	},
+//	[types.APP_GOODS_RATESHOW] (state,{show}) {
+//		console.log(show);
+//		if(show){
+//			state.ratedata = state.ratedata;
+//		}else{
+//			state.ratedata = state.ratedata.filter((o) => {
+//				return o.text;
+//			});
+//		};
+//	}
 }
 
 export default {

@@ -55,7 +55,7 @@ export default {
 			this.$store.commit(types.APP_GOODS_RATESELECT,{index:i});
 		},
 		isshow(onOff){
-			this.$store.commit(types.APP_GOODS_RATESHOW,{show:onOff});
+			this.$store.commit(types.APP_GOODS_RATESELECT,{show:onOff});
 		}
 	},
     created(){

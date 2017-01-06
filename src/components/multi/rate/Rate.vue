@@ -93,10 +93,12 @@ export default {
 	methods:{
 		ratename(i,ev){
 				this.active =i;
+				this._rateScroll();
 				this.$emit("select",i);
 		},
 		listShow(){
 				this.rateShow = !this.rateShow;
+				this._rateScroll()
 				this.$emit("isshow",this.rateShow);
 		},
 		_rateScroll(){

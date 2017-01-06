@@ -51,7 +51,21 @@ export const getRatings = ({commit}) => {
 	);
 };
 
-
+////评价详情
+//export const ratingShow = ({commit,state},{show}) => {
+//	let index = state.ratings.index;
+//	if(show === undefined){
+//		rateshow(index);
+//		return;
+//	};
+//	if(show){
+//		state.rateshow = state.ratings;
+//		rateshow(index);
+//	}else{
+//		state.rateshow = state.ratings.filter((o) => o.text);
+//		rateshow(state.index);
+//	};
+//}
 
 
 

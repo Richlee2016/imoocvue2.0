@@ -57,7 +57,7 @@ export default {
 			this.$store.commit(types.APP_RATINGS_RATESELECT,{index:i});
 		},
 		isshow(onOff){
-			this.$store.commit(types.APP_RATINGS_RATESHOW,{show:onOff});
+			this.$store.commit(types.APP_RATINGS_RATESELECT,{show:onOff});
 		}
 	},
     created(){
