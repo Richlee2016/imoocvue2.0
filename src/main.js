@@ -9,6 +9,7 @@ import Goods from './components/Contents/Goods'
 import Ratings from './components/Contents/Ratings'
 import Seller from './components/Contents/Seller'
 import Detail from './components/Contents/Detail'
+import Test from './components/Contents/Test'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
@@ -30,6 +31,7 @@ const router = new VueRouter({
 				},
 				{ path: '/evaluate', component: Ratings },
 				{ path: '/seller', component: Seller },
+				{ path: '/test', component: Test }
 			]
 });
 

@@ -1,17 +1,17 @@
 <template>
   <div id="app">
   	<div>
-  	<v-header></v-header>
+  	<!--<v-header></v-header>
   	<ul class="tab">
   		<li><router-link to='/goods'>商品</router-link></li>
   		<li><router-link to='/evaluate'>评价</router-link></li>
   		<li><router-link to='/seller'>商家</router-link></li>
-  	</ul></div>
+  	</ul></div>-->
   	<div class="content">
   		<router-view></router-view>
   	</div>
   	
-  	<v-shopcart></v-shopcart>
+  	<!--<v-shopcart></v-shopcart>-->
   </div>
 </template>
 
