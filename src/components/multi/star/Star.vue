@@ -66,6 +66,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 .star-box{
+	width: 3rem;
 	overflow: hidden;
 	height: 0.4rem;
 	span{
@@ -75,13 +76,19 @@ export default {
 		height: 0.4rem;
 	}
 	.star-on{
-		background: yellowgreen;
+		/*background: yellowgreen;*/
+		background: url(../../../../static/images/star03.png);
+		background-size: 0.4rem 0.4rem;
 	}
 	.star-half{
-		background: cornflowerblue;
+		/*background: cornflowerblue;*/
+		background: url(../../../../static/images/star02.png);
+		background-size: 0.4rem 0.4rem;
 	}
 	.star-off{
-		background: royalblue;
+		/*background: royalblue;*/
+		background: url(../../../../static/images/star01.png);
+		background-size: 0.4rem 0.4rem;
 	}
 }
 </style>

@@ -29,13 +29,27 @@
   	</div>
   	<transition name="detail-out">
   	<div v-if="detailOut" class="detail-box">
-  		详情
-  		<!-- 星星组件 -->
-  		<star></star>
-  		<!-- 优惠组件 -->
-  		<prefer :preData="seller.supports"></prefer>
-  		<p>{{seller.bulletin}}</p>
-  		<div class="close" @click="detailOut = false">CLOSE</div>
+  		<section>
+	  		<div class="detail-name">详情</div>
+	  		<!-- 星星组件 -->
+	  		<div class="detail-star">
+		  		<star
+		  			:starNum="seller.score"
+		  			></star>
+	  		</div>
+	  		<!-- 优惠组件 -->
+	  		<div class="detail-pre">
+	  			<div class="line-name">优惠信息</div>
+		  		<prefer
+		  			 :preData="seller.supports"
+		  			 ></prefer>
+	  		</div>
+	  		<div class="detail-pre">
+	  			<div class="line-name">商家公告</div>
+		  		<p class="bulletin">{{seller.bulletin}}</p>
+	  		</div>
+	  		<div class="close" @click="detailOut = false">CLOSE</div>
+  		</section>
   	</div>
   	</transition>
   	<!--<div class="get" @click="get">get</div>-->
@@ -102,7 +116,7 @@ export default {
 	width: 100%;
 	padding-top: 0.24rem;
 	padding-bottom: 0.24rem;
-	background: rgba(0,0,0,0.4);
+	background: rgba(0,0,0,0.2);
 	&>div{
 		float: left;
 		width: 1.28rem;
@@ -187,19 +201,70 @@ export default {
 	}
 }
 .detail-box{
+	overflow-y:auto ;
 	z-index: 200;
 	position: fixed;
 	left: 0px;
 	top: 0px;width: 100%;
-	min-height: 100%;
-	background: rgba(0,0,0,0.8);
+	height: 100%;
+	background: rgba(7,17,27,0.8);
 	color: white;
+	section{
+		overflow: hidden;
+		min-height:100% ;
+	}
+	.detail-name{
+		text-align: center;
+		margin-top: 0.64rem;
+	}
+	.detail-star{
+		padding-top: 0.2rem;
+		width: 3rem;
+		margin: auto;
+	}
+	.detail-pre{
+		font-size: 0.2rem;
+		padding-top: 0.5rem;
+		overflow: hidden;
+		width: 5rem;
+		margin-left: 0.7rem;
+	}
 	.close{
 		float: left;
+		height: 2rem;
+		line-height: 2rem;
 		width: 100%;
 		text-align: center;
+		position: absolute;
+		left: 0px;
+		bottom:0rem;
 	}
 }
+.line-name{
+			text-align: center;
+			margin-bottom: 0.3rem;
+			&::before{
+				content: "";
+				height: 1px;
+				width: 1.8rem;
+				background: rgba(255,255,255,0.4);
+				position: absolute;
+				left: 0px;
+				top: 50%;
+			}
+			&::after{
+				content: "";
+				height: 1px;
+				width: 1.8rem;
+				background: rgba(255,255,255,0.4);
+				position: absolute;
+				right: 0px;
+				top: 50%;
+			}
+		}
+.bulletin{
+	line-height: 0.34rem;
+}		
 .detail-out-enter,.detail-out-leave-active{
 	opacity: 0;
 }
