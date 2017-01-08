@@ -14,7 +14,9 @@ export default {
 	props:{
 		preData:{
 			type:Array,
-			default:[]
+			default(){
+				return [];
+			}
 		}
 	},
   computed:{
@@ -46,6 +48,9 @@ export default {
 	height: auto;
 	float: left;
 	font-size: 0.16rem;
+	.pre:nth-of-type(1){
+		margin-top: 0px;
+	}
 	>div{
 		width: 100%;
 		height: 0.4rem;
