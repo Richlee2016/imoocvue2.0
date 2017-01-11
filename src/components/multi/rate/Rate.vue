@@ -15,8 +15,9 @@
   	</div>
   	<div class="rate-wrapper" ref="ratewrapper">
 	  	<div class="rate-container">
-				<div class="rate-list" v-for="item in ratelist.data">
-					  	<div class="logo">
+				<div class="rate-list" v-for="(rate,index) in ratelist.data" :class="{'rateblock':showindex == index,'ratemain':showindex !== index}">
+				  	<section v-for="item in rate">
+				  		<div class="logo">
 					  		<img :src="item.avatar"/>
 					  	</div>
 					  	<div class="main">
@@ -44,6 +45,7 @@
 					  			<span>{{item.text}}</span>
 					  		</div>
 					  	</div>
+				  	</section>
 			  </div>
 			  <div></div>
 	  	</div>
@@ -69,7 +71,7 @@ export default {
 		ratelist:{
 			type:Object,
 			default:function(){
-				return {};
+				return [];
 			}
 		},
 		isOut:{
@@ -87,14 +89,14 @@ export default {
 		return {
 			active:0,
 			rateShow:true,
-			showData:[]
+			showindex:0
 		}
 	},
 	methods:{
 		ratename(i,ev){
 				this.active =i;
 				this._rateScroll();
-				this.$emit("select",i);
+				this.showindex = i;
 		},
 		listShow(){
 				this.rateShow = !this.rateShow;
@@ -119,6 +121,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.rate-list{
+	section{
+		overflow: hidden;
+	}
+}
+.ratemain{
+	display: none;
+}
 .rate-box{
 	overflow: hidden;
 	padding: 0 0.2rem;
@@ -196,5 +206,8 @@ export default {
 	overflow: hidden;
 	width: 100%;
 	height: 4.59rem;
+}
+.rateblock{
+	display: block;
 }
 </style>

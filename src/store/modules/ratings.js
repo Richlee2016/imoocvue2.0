@@ -5,9 +5,7 @@ const state = {
 	//状态码规定
 	ERR_OK:0,
 	//优惠
-	ratedata:[],
-	rateshow:[],
-	index:0
+	rateshow:[]
 }
 
 const mutations = {
@@ -16,45 +14,39 @@ const mutations = {
 		state.ratedata = ratings.data;
 		state.rateshow = ratings.data;
 	},
-	[types.APP_RATINGS_RATESELECT] (state,{index,show}) {
-		let rateshow = (index) => {
-			switch (index){
-				case 0:
-					state.ratedata = state.rateshow;
-					break;
-				case 1:
-					state.ratedata = state.rateshow.filter((o) => o.score>= 3);
-					break;
-				case 2:
-					state.ratedata = state.rateshow.filter((o) => o.score<3);
-					break;	
-			}
-		}
-		if(typeof index === 'number'){state.index = index};
-		if(show === undefined){
-			rateshow(state.index);
-			return;
-		};
+	[types.APP_RATINGS_SHOW] (state,{show}) {
 		if(show){
 			state.rateshow = state.ratings;
-			rateshow(state.index);
 		}else{
 			state.rateshow = state.ratings.filter((o) => o.text);
-			rateshow(state.index);
 		};
-	},
-//	[types.APP_RATINGS_RATESHOW] (state,{show}) {
-//		if(show){
-//			state.ratedata = state.ratings;
-//		}else{
-//			state.ratedata = state.ratings.filter((o) => o.text);
-//		};
-//		console.log();
-//		Vue.store.commit(types.APP_RATINGS_RATESELECT,{index:state.index});
-//	}
+	}
 }
+
+//评价
+const actions = {
+	getRatings ({commit}) {
+		Vue.http.get("/api/ratings")
+		.then(
+			(ret) => {
+				commit(types.APP_RATINGS,{ratings: ret.body})
+			},(err) => {
+				console.log(err)
+			}
+		);
+	},
+	ratingShow ({commit,state},{index,show}) {
+		if(show !== undefined){
+			commit(types.APP_RATINGS_SHOW,{show:show});
+		};
+	}
+}
+
+
+
 
 export default {
   state,
-  mutations
+  mutations,
+  actions
 }

@@ -15,7 +15,7 @@
 	  		<h3>{{goods.name}}</h3>
 	  		<section class="food-wraper" v-for="(food,ind) in goods.foods" @click='routerDetail(food,$event)'>
 	  			<div class="food-left">
-	  				<!--<img :src="food.icon"/>-->
+	  				<img :src="food.icon"/>
 	  			</div>
 	  			<div class="food-right">
 	  				<h3>{{food.name}}</h3>

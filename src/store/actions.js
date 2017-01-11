@@ -39,17 +39,17 @@ export const buyGoods = ({commit}) => {
 }
 
 
-//评价
-export const getRatings = ({commit}) => {
-	Vue.http.get("/api/ratings")
-	.then(
-		(ret) => {
-			commit(types.APP_RATINGS,{ratings: ret.body})
-		},(err) => {
-			console.log(err)
-		}
-	);
-};
+////评价
+//export const getRatings = ({commit}) => {
+//	Vue.http.get("/api/ratings")
+//	.then(
+//		(ret) => {
+//			commit(types.APP_RATINGS,{ratings: ret.body})
+//		},(err) => {
+//			console.log(err)
+//		}
+//	);
+//};
 
 ////评价详情
 //export const ratingShow = ({commit,state},{show}) => {

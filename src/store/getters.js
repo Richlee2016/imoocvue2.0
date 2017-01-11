@@ -20,25 +20,24 @@ export const ratings = state => state.goods.detailGoods.ratings;
 
 //rating评价
 export const ratingrate = state => {
-	let filterRate = (arr) => {
-		let all = arr;
-		let good = arr.filter((o) => {
+	let show = state.ratings.rateshow,
+		ratings = state.ratings.ratings;
+	let filter = (data) => {
+		let all = data;
+		let good = data.filter((o) => {
 			return o.score >=3
 		});
-		let bad = arr.filter((o) => {
+		let bad = data.filter((o) => {
 			return o.score <3
 		});
-		
 		return {
 			data:[all,good,bad],
 			len:[all.length,good.length,bad.length]
 		}
-	};
-	let data =state.ratings.ratedata;
-	let len = filterRate(state.ratings.ratings).len;
+	}
 	return {
-		data:data,
-		len:len
+		data:filter(show).data,
+		len:filter(ratings).len,
 	}
 }
 

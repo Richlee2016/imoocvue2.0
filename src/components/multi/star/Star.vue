@@ -77,17 +77,17 @@ export default {
 	}
 	.star-on{
 		/*background: yellowgreen;*/
-		background: url(../../../../static/images/star03.png);
+		/*background: url(../../../../static/images/star03.png);*/
 		background-size: 0.4rem 0.4rem;
 	}
 	.star-half{
 		/*background: cornflowerblue;*/
-		background: url(../../../../static/images/star02.png);
+		/*background: url(../../../../static/images/star02.png);*/
 		background-size: 0.4rem 0.4rem;
 	}
 	.star-off{
 		/*background: royalblue;*/
-		background: url(../../../../static/images/star01.png);
+		/*background: url(../../../../static/images/star01.png);*/
 		background-size: 0.4rem 0.4rem;
 	}
 }

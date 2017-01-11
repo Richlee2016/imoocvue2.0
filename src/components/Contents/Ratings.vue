@@ -31,7 +31,6 @@
 	  <v-rate
 	  	:ratelist="ratelist"
 	  	@isshow="isshow"
-	  	@select="selector"
 	  	></v-rate>
 	</div>
 </template>
@@ -53,11 +52,8 @@ export default {
 		})
 	},
 	methods:{
-		selector(i){
-			this.$store.commit(types.APP_RATINGS_RATESELECT,{index:i});
-		},
 		isshow(onOff){
-			this.$store.commit(types.APP_RATINGS_RATESELECT,{show:onOff});
+			this.$store.dispatch("ratingShow",{show:onOff});
 		}
 	},
     created(){
