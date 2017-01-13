@@ -15,28 +15,19 @@ export const getSeller = ({commit}) => {
 
 
 //商品
-export const getGoods = ({commit}) => {
-	Vue.http.get("/api/goods")
-	.then(
-		(ret) => {
-			commit(types.APP_GOODS,{goods: ret.body})
-		},(err) => {
-			console.log(err)
-		}
-	);
-};
+//export const getGoods = ({commit}) => {
+//	Vue.http.get("/api/goods")
+//	.then(
+//		(ret) => {
+//			commit(types.APP_GOODS,{goods: ret.body})
+//		},(err) => {
+//			console.log(err)
+//		}
+//	);
+//};
 
 //提交购买的商品
-export const buyGoods = ({commit}) => {
-	Vue.http.post("/api/goods/buy")
-	.then(
-		(ret) => {
-			commit(types.APP_GOODS_BUY,{goods: ret.body});
-		},(err) => {
-			console.log(err);
-		}
-	);
-}
+
 
 
 ////评价

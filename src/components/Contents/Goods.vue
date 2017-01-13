@@ -25,18 +25,19 @@
 	  					<label>￥{{food.price}}</label>
 	  					<b v-show='food.oldPrice'>￥{{food.oldPrice}}</b>
 	  				</span>
+	  				<div class="good-carcontrol">
 	  				<v-carcontrol 
-	  					@renduce='commitGood({food:food,index:ind})'
-	  					@add='commitGood({food:food,index:ind})'
-	  					ref='goodID'
+	  					:propsNum="food"
+	  					@renduce='reduceGood(food)'
+	  					@add='addGood(food)'
 	  					></v-carcontrol>
+	  				</div>	
 	  			</div>
 	  		</section>
 	  	</li>
 	  </ul>
 	  </div>
 	  <!--<span class="get" @click="get">get</span>-->
-	    
 			<v-detail
 				:detailShow="detailShow"
 				@close='detailShow = false'
@@ -45,7 +46,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapMutations} from 'vuex'
 import * as types from '../../store/types'
 import Bscroll from 'better-scroll'
 import Carcontrol from '../multi/shopcar/Carcontrol'
@@ -62,7 +63,8 @@ export default {
     	//good 滚动Y值
     	scrollY:0,
     	//详情数据
-    	detailShow:false
+    	detailShow:false,
+    	countnum:0
     }
   },
   computed:{
@@ -83,6 +85,11 @@ export default {
   methods:{
   	get() {
 		console.log(this.allGoods);
+  	},
+  	watch:{
+  		allGoods (n,o){
+  			console.log(n,o);
+  		}
   	},
   	navScroll(index,ev){
   		//处理 iScroll得一种兼容
@@ -116,13 +123,11 @@ export default {
 			this.foodHei.push(totalHei);
 		};
 	},
-	commitGood(food) {
-		//提交商品数
-		let foodAdd = {
-			foodData:food.food,
-			num:this.$refs.goodID[food.index].goodNum
-		}
-		this.$store.commit(types.APP_GOODS_PUSH,{food:foodAdd});
+	addGood(food) {
+		this.$store.commit(types.APP_GOODS_ADD,{food:food});
+	},
+	reduceGood(food) {
+		this.$store.commit(types.APP_GOODS_REDUCE,{food:food});
 	},
 	routerDetail(food,ev){
 		if(!ev._constructed){
@@ -151,6 +156,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.good-carcontrol{
+	float: right;
+	overflow: hidden;
+	margin-right: 0.2rem;
+}
 .link-a{
 	display: block;
 }

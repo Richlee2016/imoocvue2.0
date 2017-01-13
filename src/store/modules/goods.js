@@ -1,4 +1,5 @@
 import * as types from '../types'
+import Vue from 'vue'
 const state = {
 	//商品信息
 	goods:[],
@@ -17,40 +18,34 @@ const state = {
 const mutations = {
 	[types.APP_GOODS] (state,{goods}) {
 		state.goods = goods.data;
-	},
-	[types.APP_GOODS_BUY] (state,{goods}) {
-		console.log(goods);
-	},
-	//购物车添加
-	[types.APP_GOODS_PUSH] (state,{food}) {
-		//添加封装
-		let add = () => {
-			food.foodData.count = food.num;
-			state.choiceGoods.push(food.foodData);
-		}
-		//初次添加
-		if(state.choiceGoods.length == 0){
-			add();
-			return;
-		};
-		//如果不存在就添加
-		//这里存在函数的引用 更改的 food.foodData 是对整个 state.goods 进行更改  (所以这里可以匹配成功) //这里采用引用的形式是否有不妥？？？
-		if(state.choiceGoods.indexOf(food.foodData) == -1){
-			add();
-		//存在修改 数量	
-		}else{
-			state.choiceGoods.forEach((o) => {
-				if(o.name === food.foodData.name){
-					o.count = food.num;
-				};
-			});
-		};
-		//过滤掉 count 为0的商品
-		let countZero= state.choiceGoods.filter((o) => {
-			return o.count !== 0;
+		state.goods.forEach((good) => {
+			good.foods.forEach((food) => food.count = 0)
 		});
-		//更新数组  使得getter 计算属性
-		state.choiceGoods = countZero;
+	},
+	//购物车加
+	[types.APP_GOODS_ADD] (state,{food}){
+		food.count++;
+		if(state.choiceGoods.indexOf(food) == -1){
+			state.choiceGoods.push(food);
+		};
+//		console.log(state.choiceGoods);
+	},
+	////购物车减
+	[types.APP_GOODS_REDUCE] (state,{food}){
+		food.count--;
+		state.choiceGoods.forEach((o,i) =>{
+			if(o.count === 0){
+				state.choiceGoods.splice(i,1)
+			};
+		});
+//		console.log(state.choiceGoods);
+	},
+	[types.APP_GOODS_RATESHOW] (state,{show}) {
+		if(show){
+			state.rateshow = state.ratings;
+		}else{
+			state.rateshow = state.ratings.filter((o) => o.text);
+		};
 	},
 	//商品详情
 	[types.APP_GOODS_DETAIL] (state,{food}) {
@@ -62,46 +57,86 @@ const mutations = {
 		state.detailGoods = food;
 		//评价信息
 		state.ratings = food.ratings;
-		state.ratedata = state.ratings;
+		state.rateshow = state.ratings;
 	},
-	[types.APP_GOODS_RATESELECT] (state,{index,show}) {	
-		let rateshow = (index) => {
-			switch (index){
-				case 0:
-					state.ratedata = state.rateshow;
-					break;
-				case 1:
-					state.ratedata = state.rateshow.filter((o) => o.rateType == 0);
-					break;
-				case 2:
-					state.ratedata = state.rateshow.filter((o) => o.rateType == 1);
-					break;	
+}
+
+const actions = {
+	//获取商品
+	getGoods ({commit}){
+		Vue.http.get("/api/goods")
+		.then(
+			(ret) => {
+				commit(types.APP_GOODS,{goods: ret.body})
+			},(err) => {
+				console.log(err)
+			}
+		);
+	},
+	//购买商品提交
+	buyGoods ({commit}){
+		Vue.http.post("/api/goods/buy")
+		.then(
+			(ret) => {
+				console.log(ret.body);
+			},(err) => {
+				console.log(err);
+			}
+		);
+	},
+	//是否有详情评价
+	goodsRateShow ({commit,state},{index,show}) {
+		console.log(0);
+		if(show !== undefined){
+//			commit(types.APP_GOODS_RATESHOW,{show:show});
+		};
+	}
+}
+
+const getters = {
+	//所有的商品
+	allgoods (state){
+		return state.goods;
+	},
+	//结算
+	tatleprice (state){
+		let all = 0,
+			len = 0;
+		let goods = state.choiceGoods;
+		for(let i=0; i<goods.length; i++){
+			all =all + goods[i].count*goods[i].price;
+		};
+		goods.forEach((o) => {
+			len = len + o.count;
+		});
+		return {
+			all:all,
+			len:len
+		}
+	},
+	//商品的详情页评价
+	goodsrate (state){
+		let show = state.rateshow,
+			ratings = state.ratings;
+		let filter = (data) => {
+			let all = data;
+			let good = data.filter((o) => o.rateType == 0);
+			let bad = data.filter((o) => o.rateType == 1);
+			return {
+				data:[all,good,bad],
+				len:[all.length,good.length,bad.length]
 			}
 		}
-		if(typeof index === 'number'){state.index = index};
-		if(show){
-			state.rateshow = state.ratings;
-			rateshow(state.index);
-		}else{
-			state.rateshow = state.ratings.filter((o) => o.text);
-			rateshow(state.index);
-		};
-		
-		
-	},
-//	[types.APP_GOODS_RATESHOW] (state,{show}) {
-//		console.log(show);
-//		if(show){
-//			state.ratedata = state.ratedata;
-//		}else{
-//			state.ratedata = state.ratedata.filter((o) => {
-//				return o.text;
-//			});
-//		};
-//	}
+		return {
+			data:filter(show).data,
+			len:filter(ratings).len,
+		}
+	}
 }
 
 export default {
   state,
-  mutations
+  mutations,
+  actions,
+  getters
 }

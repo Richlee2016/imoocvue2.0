@@ -1,18 +1,19 @@
 <template>
   <div class="shopcart">
   	<div class="car-box">
-  		<span>
+  		<div class="car-num" v-show="tatleprice.len>0">{{tatleprice.len}}</div>
+  		<span :class="{'height-light':tatleprice.len>0}">
   			<label>car</label>
   		</span>
   	</div>
   	<div class="car-pri">
-  		<p>${{tatleprice}}</p>
+  		<p>${{tatleprice.all}}</p>
   		<span>另需配送费￥{{sendPrice}}元</span>
   	</div>
   	<span class="car-sub" >
-  		<span v-show='tatleprice==0'>${{minPrice}}起送</span>
-  		<span v-show="tatleprice>0 && minPrice-tatleprice>0">还差${{minPrice-tatleprice}}起送</span>
-  		<span v-show="minPrice-tatleprice<=0" @click="subBuygood">结算</span>
+  		<span v-show='tatleprice.all==0'>${{minPrice}}起送</span>
+  		<span v-show="tatleprice.all>0 && minPrice-tatleprice.all>0">还差${{minPrice-tatleprice.all}}起送</span>
+  		<span v-show="minPrice-tatleprice.all<=0" @click="subBuygood">结算</span>
   	</span>
   </div>
 </template>
@@ -27,7 +28,7 @@ export default {
 		}
 	},
 	components:{
-		
+		test:"allgoods"
 	},
 	methods:{
 		subBuygood(){
@@ -59,6 +60,10 @@ export default {
 	position:absolute;
 	left: 0.36rem;
 	top: -0.24rem;
+	.height-light{
+		background: #00a0dc;
+		color: white;
+	}
 	span{
 		display: block;
 		width: 0.88rem;
@@ -67,7 +72,7 @@ export default {
 		margin-left: 0.06rem;
 		margin-top: 0.07rem;
 		background: #2b343c;
-		color: white;
+		color: #80858a;
 		font-size: 0.4rem;
 		text-align: center;
 		line-height: 0.68rem;
@@ -109,5 +114,19 @@ export default {
 	color: rgba(255,255,255,0.4);
 	text-align: center;
 	line-height: 1.16rem;
+}
+.car-num{
+	z-index: 99;
+	width: 0.5rem;
+	height: 0.24rem;
+	color: white;
+	border-radius:0.4rem;
+	background:#f01414;
+	font-size: 0.16rem;
+	line-height: 0.24rem;
+	text-align: center;
+	position: absolute;
+	right: 0px;
+	top: 0px;
 }
 </style>

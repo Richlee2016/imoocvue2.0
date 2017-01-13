@@ -23,7 +23,7 @@
 					  	<div class="main">
 					  		<div class="one">
 					  			<span>{{item.username}}</span>
-					  			<label>{{item.rateTime}}</label>
+					  			<label>{{_time(item.rateTime)}}</label>
 					  		</div>
 					  		<div v-if="isOut.star" class="star">
 					  			<v-star
@@ -103,10 +103,13 @@ export default {
 				this._rateScroll()
 				this.$emit("isshow",this.rateShow);
 		},
-		_rateScroll(){
+		_rateScroll (){
 			this.rateingScroll = new Bscroll(this.$refs.ratewrapper,{
 				click:true
 			});
+		},
+		_time (time){
+			return time+"lee";
 		}
 	},
 	mounted(){
@@ -114,7 +117,7 @@ export default {
 		let timer = setTimeout(() => {
 			this._rateScroll();
 			clearTimeout(timer);
-		},100);
+		},200);
 	}
 }	
 </script>

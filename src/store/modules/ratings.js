@@ -11,7 +11,6 @@ const state = {
 const mutations = {
 	[types.APP_RATINGS] (state,{ratings}) {
 		state.ratings = ratings.data;
-		state.ratedata = ratings.data;
 		state.rateshow = ratings.data;
 	},
 	[types.APP_RATINGS_SHOW] (state,{show}) {
@@ -42,11 +41,34 @@ const actions = {
 	}
 }
 
-
+const getters = {
+	ratingrate(state){
+		let show = state.rateshow,
+			ratings = state.ratings;
+		let filter = (data) => {
+			let all = data;
+			let good = data.filter((o) => {
+				return o.score >=3
+			});
+			let bad = data.filter((o) => {
+				return o.score <3
+			});
+			return {
+				data:[all,good,bad],
+				len:[all.length,good.length,bad.length]
+			}
+		}
+		return {
+			data:filter(show).data,
+			len:filter(ratings).len,
+		}
+	}
+}
 
 
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }

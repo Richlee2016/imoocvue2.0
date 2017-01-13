@@ -48,7 +48,7 @@ export default {
 	computed:{
 		...mapGetters({
 			seller:"allseller",
-			ratelist:"ratingrate"
+			ratelist:"ratingrate",
 		})
 	},
 	methods:{

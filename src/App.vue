@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+  	<div class="mytest"></div>
   	<div class="header">
   	<v-header></v-header>
   	<ul class="tab">

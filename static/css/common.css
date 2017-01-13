@@ -77,3 +77,8 @@ table {
 th, td {
   text-align: left;
 }
+
+
+.mytest{
+	transition: 1s ease-in;
+}
