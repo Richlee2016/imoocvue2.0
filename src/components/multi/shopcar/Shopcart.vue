@@ -27,9 +27,6 @@ export default {
 			sendPrice:6
 		}
 	},
-	components:{
-		test:"allgoods"
-	},
 	methods:{
 		subBuygood(){
 			this.$store.dispatch("buyGoods");
@@ -99,7 +96,7 @@ export default {
 		line-height: 0.76rem;
 		padding-left: 0.2rem;
 		font-size: 0.2rem;
-		width: 1.98rem;
+		width: 1.8rem;
 		text-align: left;
 		border-left:rgba(255,255,255,0.6) 1px solid;
 	}

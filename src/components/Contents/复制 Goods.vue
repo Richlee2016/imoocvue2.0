@@ -1,5 +1,6 @@
 <template>
 	<div class="goods">
+		<!--<router-link :to="{name:'detail',params: { goodID: 123 }}">detail</router-link>-->
 		<div class="goods-nav" ref="menuscroll">
 		  <ul>
 		  	<li
@@ -12,7 +13,7 @@
 	  <ul>
 	  	<li v-for="(goods,index) in allGoods">
 	  		<h3>{{goods.name}}</h3>
-	  		<section class="food-wraper" v-for="(food,i) in goods.foods" @click='routerDetail(food,$event)'>
+	  		<section class="food-wraper" v-for="(food,ind) in goods.foods" @click='routerDetail(food,$event)'>
 	  			<div class="food-left">
 	  				<img :src="food.icon"/>
 	  			</div>
@@ -25,10 +26,10 @@
 	  					<b v-show='food.oldPrice'>￥{{food.oldPrice}}</b>
 	  				</span>
 	  				<div class="good-carcontrol">
-	  				<v-carcontrol
-	  					:propsNum='food.count'
-	  					@add="add({id:food.id,evname:'add'})"
-	  					@reduce="add({id:food.id,evname:'reduce'})"
+	  				<v-carcontrol 
+	  					:propsNum="food"
+	  					@renduce='reduceGood(food)'
+	  					@add='addGood(food)'
 	  					></v-carcontrol>
 	  				</div>	
 	  			</div>
@@ -37,13 +38,16 @@
 	  </ul>
 	  </div>
 	  <!--<span class="get" @click="get">get</span>-->
-		<v-detail></v-detail>
+			<v-detail
+				:detailShow="detailShow"
+				@close='detailShow = false'
+				></v-detail>
 	</div>
 </template>
 
 <script>
 import {mapGetters,mapMutations} from 'vuex'
-import types from 'types'
+import * as types from '../../store/types'
 import Bscroll from 'better-scroll'
 import Carcontrol from '../multi/shopcar/Carcontrol'
 import Detail from './Detail'
@@ -79,9 +83,14 @@ export default {
   	})
   },
   methods:{
-	...mapMutations({
-		add:types.GOODS_NUM
-	}),
+  	get() {
+		console.log(this.allGoods);
+  	},
+  	watch:{
+  		allGoods (n,o){
+  			console.log(n,o);
+  		}
+  	},
   	navScroll(index,ev){
   		//处理 iScroll得一种兼容
   		if(!ev._constructed){
@@ -114,17 +123,24 @@ export default {
 			this.foodHei.push(totalHei);
 		};
 	},
+	addGood(food) {
+		this.$store.commit(types.APP_GOODS_ADD,{food:food});
+	},
+	reduceGood(food) {
+		this.$store.commit(types.APP_GOODS_REDUCE,{food:food});
+	},
 	routerDetail(food,ev){
 		if(!ev._constructed){
   			return;
   		};
+		this.detailShow = true;
 		//提交详情
-		this.$store.dispatch(types.GOODS_DETAIL_FOOD,{food:food,saw:true});
+		this.$store.commit(types.APP_GOODS_DETAIL,{food:food});
 	}
   },
   //提交　　获取数据
   created(){
-  	this.$store.dispatch(types.GOODS_ALL);
+  	this.$store.dispatch("getGoods");
   },
   //在dom加载完成之后  进行相应得操作
 　　　mounted(){

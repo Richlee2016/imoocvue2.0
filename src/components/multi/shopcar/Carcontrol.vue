@@ -3,7 +3,7 @@
   	<transition name="min-out">
   		<span class="reduce" v-show="minShow" @click.stop="reduce">-</span>
   	</transition>
-  	<div v-show="minShow" class="carnum">{{num}}</div>
+  	<div v-show="minShow" class="carnum">{{propsNum}}</div>
   	<span class="add" @click.stop="add">+</span>
   </div>
 </template>
@@ -13,47 +13,31 @@ import {mapGetters} from 'vuex'
 export default {
 	data(){
 		return{
-			goodNum:0,
-			minShow:false,
-			num:0
+//			minShow:false,
 		}
 	},
 	props:{
-		boxIndex:{
+		propsNum:{
 			type:Number,
 			default:0
-		},
-		propsNum:{
-			type:Object,
-			default(){
-				return {}
-			}
+		}
+	},
+	computed:{
+		minShow (){
+			if(this.propsNum > 0){
+				return true;
+			}else{
+				return false;
+			};
 		}
 	},
 	methods:{
 		reduce(){
-			this.$emit("renduce");
-			this.num = this.propsNum.count;
-			if(this.num === 0){
-				this.minShow = false;
-			};
+			this.$emit("reduce");
 		},
 		add(){
 			this.$emit("add");
-			this.num = this.propsNum.count;
-			if(this.num > 0){
-				this.minShow = true;
-			};
 		}
-	},
-	created (){
-		this.num = this.propsNum.count;
-		if(this.num === 0){
-				this.minShow = false;
-		};
-		if(this.num > 0){
-				this.minShow = true;
-		};
 	}
 }
 </script>

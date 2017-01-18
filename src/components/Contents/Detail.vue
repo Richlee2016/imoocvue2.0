@@ -1,81 +1,60 @@
 <template>
 	<transition name="slide-fade">
-	<div class="detail" v-if='detailShow'>
-		<button class="backbtn" @click="quit">back</button>
+	<div class="detail" v-show='detail.show'>
+		<button class="backbtn" @click="close">back</button>
 		<section class="box01">
-			<img :src="detailData.image"/>
-			<div class="name">{{detailData.name}}</div>
-			<div class="sellcount">月售{{detailData.sellCount}}份,好评率{{detailData.rating}}</div>
-			<div class="price">${{detailData.price}} <s v-if='detailData.oldPrice'>{{detailData.oldPrice}}</s></div>
+			<img :src="detail.food.image"/>
+			<div class="name">{{detail.food.name}}</div>
+			<div class="sellcount">月售{{detail.food.sellCount}}份,好评率{{detail.food.rating}}</div>
+			<div class="price">${{detail.food.price}} <s v-if='detail.food.oldPrice'>{{detail.food.oldPrice}}</s></div>
 			<div class="addcar">
-				<span v-if="detailData.count>0? false : true" class="addbtn" @click="addCarBtn">加入购物车</span>
+				<span v-if="detail.food.count>0? false : true" class="addbtn">加入购物车</span>
 				<v-carcontrol
 					v-else
-					:propsNum="detailData"
-  					@renduce='reduceGood(detailData)'
-  					@add='addGood(detailData)'
+					:propsNum='detail.food.count'
+  					@add="add({id:detail.food.id,evname:'add'})"
+  					@reduce="add({id:detail.food.id,evname:'reduce'})"
 					></v-carcontrol>
 			</div>
 		</section>
 		<section class="box02">
 			<h3>商品介绍</h3>
-			<p>{{detailData.description}}</p>
+			<p>{{detail.food.description}}</p>
 		</section>
 		<v-rate
 			:isOut="{star:false,text:false,common:false}"
 			:ratelist="ratelist"
-		  	@isshow="isshow"
+		  	@isshow="issaw"
 			></v-rate>
 	</div>
 	</transition>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import * as types from "../../store/types"
-import Rate from '../multi/rate/Rate'
-import Carcontrol from '../multi/shopcar/Carcontrol'
+import {mapGetters,mapMutations} from 'vuex'
+import types from 'types'
+import Rate from 'components/multi/rate/Rate'
+import Carcontrol from 'components/multi/shopcar/Carcontrol'
 export default {
 	components:{
 		"v-rate":Rate,
 		"v-carcontrol":Carcontrol
 	},
-	data (){
-	    return {
-	    	addshow:true
-	    }
-	},
 	computed:{
 		...mapGetters({
-	  		detailData:"detailgoods",
-	  		ratelist:"goodsrate"
+	  		detail:"detail",
+	  		ratelist:"detailRatings"
 	  	})
-	},
-	props:{
-	    detailShow:{
-	    	type:Boolean,
-	      	default:false
-	    },   
-	},    
+	},  
 	methods:{
-	  	quit (){
-	  		this.$emit("close");
-	  	},
-		isshow (onOff){
-			this.$store.dispatch("goodsRateShow",{show:onOff});
-		},
-		addGood(food) {
-			this.$store.commit(types.APP_GOODS_ADD,{food:food});
-			console.log(food.count);
-		},
-		reduceGood(food) {
-			this.$store.commit(types.APP_GOODS_REDUCE,{food:food});
-			console.log(food.count);
+		...mapMutations({
+			close:types.GOODS_DETAIL_CLOSE,
+			add:types.GOODS_NUM
+		}),
+		issaw (saw){
+			this.$store.commit(types.GOODS_RATINGS_SAW,{saw:saw});
 		}
-	},
-    created (){
-  		this.$store.dispatch("getRatings");
-    }
+	}
 }
 </script>
 

@@ -7,9 +7,9 @@ const state = {
 
 const mutations = {
 	[types.APP_SELLER] (state,{seller}) {
-		if( seller.errno === state.ERR_OK){
-			state.seller = seller.data;
-		};
+//		if( seller.errno === state.ERR_OK){
+//			state.seller = seller.data;
+//		};
 	}
 }
 
