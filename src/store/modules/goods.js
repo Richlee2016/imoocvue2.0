@@ -120,13 +120,12 @@ const actions = {
 			}
 		);
 	},
-	//商品详情
+	//商品详情跳转
 	[types.GOODS_DETAIL_FOOD] ({commit},{food,saw}){
 		commit(types.GOODS_DETAIL_FOOD,{food:food});
 		commit(types.GOODS_RATINGS_SAW,{saw:saw});
 	}
 }
-
 
 
 export default {
