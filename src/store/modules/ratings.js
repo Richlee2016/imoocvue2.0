@@ -1,5 +1,5 @@
-import * as types from '../types'
 import Vue from 'vue'
+import types from 'types'
 const state = {
 	ratings:[],
 	//状态码规定
@@ -8,41 +8,8 @@ const state = {
 	rateshow:[]
 }
 
-const mutations = {
-	[types.APP_RATINGS] (state,{ratings}) {
-		state.ratings = ratings.data;
-		state.rateshow = ratings.data;
-	},
-	[types.APP_RATINGS_SHOW] (state,{show}) {
-		if(show){
-			state.rateshow = state.ratings;
-		}else{
-			state.rateshow = state.ratings.filter((o) => o.text);
-		};
-	}
-}
-
-//评价
-const actions = {
-	getRatings ({commit}) {
-		Vue.http.get("/api/ratings")
-		.then(
-			(ret) => {
-				commit(types.APP_RATINGS,{ratings: ret.body})
-			},(err) => {
-				console.log(err)
-			}
-		);
-	},
-	ratingShow ({commit,state},{index,show}) {
-		if(show !== undefined){
-			commit(types.APP_RATINGS_SHOW,{show:show});
-		};
-	}
-}
-
 const getters = {
-	ratingrate(state){
+	allratings (state){
 		let show = state.rateshow,
 			ratings = state.ratings;
 		let filter = (data) => {
@@ -64,6 +31,37 @@ const getters = {
 		}
 	}
 }
+
+const mutations = {
+	[types.RATINGS_ALL] (state,{ratings}) {
+		state.ratings = ratings.data;
+	},
+	//详情评价
+	[types.RATINGS_SAW] (state, {saw}) {
+		if(saw){
+			state.rateshow = state.ratings;
+			console.log(state.rateshow);
+		}else{
+			state.rateshow = state.ratings.filter( (o) => o.text );
+		}
+	},
+}
+
+//评价
+const actions = {
+	[types.RATINGS_ALL] ({commit}) {
+		Vue.http.get("/api/ratings")
+		.then(
+			(ret) => {
+				commit(types.RATINGS_ALL,{ratings: ret.body});
+				commit(types.RATINGS_SAW,{saw:true})
+			},(err) => {
+				console.log(err)
+			}
+		);
+	}
+}
+
 
 
 export default {

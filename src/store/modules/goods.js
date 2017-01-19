@@ -1,5 +1,20 @@
 import Vue from 'vue'
 import types from 'types'
+
+const state = {
+	//全部商品
+	goods:[],
+	//商品详情
+	detail:{
+		food:{},
+		show:false
+	},
+	//详情评价
+	ratings:[],
+	//选中商品
+	totleGoods:[]
+}
+
 const getters = {
 	//所有商品
 	allgoods (state){
@@ -43,20 +58,6 @@ const getters = {
 			len:len
 		}
 	}
-}
-
-const state = {
-	//全部商品
-	goods:[],
-	//商品详情
-	detail:{
-		food:{},
-		show:false
-	},
-	//详情评价
-	ratings:[],
-	//选中商品
-	totleGoods:[]
 }
 
 const mutations = {
@@ -126,7 +127,6 @@ const actions = {
 		commit(types.GOODS_RATINGS_SAW,{saw:saw});
 	}
 }
-
 
 export default {
   state,

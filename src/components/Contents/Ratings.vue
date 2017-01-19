@@ -29,17 +29,17 @@
 	  </div>
 	  <div class="clear-line"></div>
 	  <v-rate
-	  	:ratelist="ratelist"
-	  	@isshow="isshow"
+		:ratelist="ratelist"
+		@isshow="issaw"
 	  	></v-rate>
 	</div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import * as types from '../../store/types'
-import Star from '../multi/star/Star'
-import Rate from '../multi/rate/Rate'
+import types from 'types'
+import Star from 'components/multi/star/Star'
+import Rate from 'components/multi/rate/Rate'
 export default {
 	components:{
 		"v-star":Star,
@@ -48,17 +48,17 @@ export default {
 	computed:{
 		...mapGetters({
 			seller:"allseller",
-			ratelist:"ratingrate",
+			ratelist:"allratings",
 		})
 	},
 	methods:{
-		isshow(onOff){
-			this.$store.dispatch("ratingShow",{show:onOff});
-		}
+		issaw (saw){
+			this.$store.commit(types.RATINGS_SAW,{saw:saw});
+		},
 	},
     created(){
-  		this.$store.dispatch("getSeller");
-  		this.$store.dispatch("getRatings");
+		this.$store.dispatch(types.RATINGS_ALL);
+		this.$store.dispatch(types.SELLER_ALL);
     }
 }
 </script>

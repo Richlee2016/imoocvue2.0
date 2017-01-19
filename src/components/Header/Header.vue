@@ -17,7 +17,7 @@
   			</li>
   			<li class="li03">
   				<!-- 优惠组件 -->
-  				<prefer :preData="support"></prefer>
+  				<v-prefer :preData="support"></v-prefer>
   				<div class="detail-in" @click="detailOut = true">{{seller.supports?seller.supports.length : 0}}个 ></div>
   			</li>
   		</ul>
@@ -33,16 +33,16 @@
 	  		<div class="detail-name">详情</div>
 	  		<!-- 星星组件 -->
 	  		<div class="detail-star">
-		  		<star
+		  		<v-star
 		  			:starNum="seller.score"
-		  			></star>
+		  			></v-star>
 	  		</div>
 	  		<!-- 优惠组件 -->
 	  		<div class="detail-pre">
 	  			<div class="line-name">优惠信息</div>
-		  		<prefer
+		  		<v-prefer
 		  			 :preData="seller.supports"
-		  			 ></prefer>
+		  			 ></v-prefer>
 	  		</div>
 	  		<div class="detail-pre">
 	  			<div class="line-name">商家公告</div>
@@ -52,12 +52,12 @@
   		</section>
   	</div>
   	</transition>
-  	<!--<div class="get" @click="get">get</div>-->
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import types from 'types'
 import Star from '../multi/star/Star'
 import Prefer from '../multi/prefer/Prefer'
 export default {
@@ -67,7 +67,8 @@ export default {
     }
   },
   components:{
-  	Star,Prefer
+  	"v-star":Star,
+  	"v-prefer":Prefer
   },
   computed:{
   	support(){
@@ -76,16 +77,11 @@ export default {
   		};
   	},
   	...mapGetters({
-  		seller:'allseller'
+			seller:'allseller'
   	})
   },
-  methods:{
-  	get() {
-  		console.log(this.seller);
-  	}
-  },
   created() {
-		this.$store.dispatch("getSeller");
+		this.$store.dispatch(types.SELLER_ALL);
   }
 }
 </script>

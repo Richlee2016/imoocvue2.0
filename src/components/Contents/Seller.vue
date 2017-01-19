@@ -52,9 +52,10 @@
 </template>
 
 <script>
-import Star from '../multi/star/Star'
-import Prefer from '../multi/prefer/Prefer'
+import Star from 'components/multi/star/Star'
+import Prefer from 'components/multi/prefer/Prefer'
 import {mapGetters} from "vuex"
+import types from 'types'
 export default {
 	components:{
 		"v-star":Star,
@@ -64,16 +65,6 @@ export default {
 		...mapGetters({
 			sellers:"allseller"
 		})
-	},
-	data () {
-	    return {
-	    	
-	    }
-	},
-	props:{
-	      propsmes:{
-	      	
-	      }
 	},    
 	methods:{
 	  test(){
@@ -81,7 +72,7 @@ export default {
 	  }
 	},
 	created(){
-		this.$store.dispatch("getSeller");
+		this.$store.dispatch(types.SELLER_ALL);
 	}
 }
 </script>

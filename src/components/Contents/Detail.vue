@@ -8,13 +8,16 @@
 			<div class="sellcount">月售{{detail.food.sellCount}}份,好评率{{detail.food.rating}}</div>
 			<div class="price">${{detail.food.price}} <s v-if='detail.food.oldPrice'>{{detail.food.oldPrice}}</s></div>
 			<div class="addcar">
-				<span v-if="detail.food.count>0? false : true" class="addbtn">加入购物车</span>
-				<v-carcontrol
-					v-else
-					:propsNum='detail.food.count'
-  					@add="add({id:detail.food.id,evname:'add'})"
-  					@reduce="add({id:detail.food.id,evname:'reduce'})"
-					></v-carcontrol>
+			<transition name="add-car" mode="out-in">	
+				<span v-if="detail.food.count>0? false : true" class="addbtn" @click="add({id:detail.food.id,evname:'add'})">加入购物车</span>
+				<div v-else class="add-control">
+					<v-carcontrol
+						:propsNum='detail.food.count'
+	  					@add="add({id:detail.food.id,evname:'add'})"
+	  					@reduce="add({id:detail.food.id,evname:'reduce'})"
+						></v-carcontrol>
+				</div>
+			</transition>		
 			</div>
 		</section>
 		<section class="box02">
@@ -110,6 +113,10 @@ export default {
 	left: 0px;
 	top: 0px;
 }
+.add-control{
+	overflow: hidden;
+	margin-top: 0.15rem;
+}
 .slide-fade-enter-active {
   transition: all 0.4s ease;
 }
@@ -118,6 +125,16 @@ export default {
 }
 .slide-fade-enter, .slide-fade-leave-active {
   transform: translateX(6.4rem);
+  opacity: 0;
+}
+.add-car-enter-active {
+	transition: all 0.2s ease;
+}
+.add-car-leave-active {
+  	transition: all 0.2s ease-in-out;
+}
+.add-car-enter, .add-car-leave-active {
+  transform: translateX(-1rem);
   opacity: 0;
 }
 </style>

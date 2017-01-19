@@ -20,7 +20,13 @@ const types = {
 	//商品详情评价
 	GOODS_RATINGS_SAW:"GOODS_RATINGS_SAW",
 	//商品加减
-	GOODS_NUM:"GOODS_NUM"
+	GOODS_NUM:"GOODS_NUM",
+	//卖家
+	SELLER_ALL:"SELLER_ALL",
+	//评价
+	RATINGS_ALL:"RATINGS_ALL",
+	//评价
+	RATING_SAW:"RATING_SAW"
 }
 
 export default types
