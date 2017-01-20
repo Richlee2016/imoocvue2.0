@@ -88,6 +88,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.header{
+	z-index: 9999;
+	/*overflow: hidden;*/
+	background: white;
+}
 .header-bd{
 	width: 100%;
 	height: 1.76rem;
@@ -169,6 +174,7 @@ export default {
 	}
 }
 .header-news{
+	overflow: hidden;
 	width: 100%;
 	height: 0.4rem;
 	float: left;
@@ -198,7 +204,7 @@ export default {
 }
 .detail-box{
 	overflow-y:auto ;
-	z-index: 200;
+	z-index: 1000;
 	position: fixed;
 	left: 0px;
 	top: 0px;width: 100%;

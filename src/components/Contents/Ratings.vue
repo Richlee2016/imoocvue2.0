@@ -1,5 +1,6 @@
 <template>
-	<div class="rating">
+	<div class="rating" ref="ratescroll">
+	<div class="rate-scroll">
 	  <div class="title">
 	  	<div class="left">
 	  		<h3>{{seller.score}}</h3>
@@ -30,8 +31,10 @@
 	  <div class="clear-line"></div>
 	  <v-rate
 		:ratelist="ratelist"
+		@resetScroll = '_scroll'
 		@isshow="issaw"
 	  	></v-rate>
+  	</div>
 	</div>
 </template>
 
@@ -40,6 +43,7 @@ import {mapGetters} from 'vuex'
 import types from 'types'
 import Star from 'components/multi/star/Star'
 import Rate from 'components/multi/rate/Rate'
+import Bscroll from 'better-scroll'
 export default {
 	components:{
 		"v-star":Star,
@@ -55,10 +59,21 @@ export default {
 		issaw (saw){
 			this.$store.commit(types.RATINGS_SAW,{saw:saw});
 		},
+		_scroll (ev){
+			let ratings = this.$refs.ratescroll;
+			let	rateScroll = new Bscroll(ratings,{
+		  			click:true
+		  		});
+		}
 	},
     created(){
 		this.$store.dispatch(types.RATINGS_ALL);
 		this.$store.dispatch(types.SELLER_ALL);
+		this.$nextTick(() => {
+			setTimeout(() => {
+				this._scroll();
+			},100);
+		});
     }
 }
 </script>

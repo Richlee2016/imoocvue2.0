@@ -1,5 +1,5 @@
 <template>
-  <div class="star-box" :class="starSize">
+  <div class="star-box" :class="size">
   	<span v-for="item in starAllNum" :class="item" class="star"></span>
   </div>
 </template>
@@ -53,42 +53,15 @@ export default {
 				starArr.push(STAR_OFF);
 			};
 			return starArr;
+  	},
+  	size (){
+  		return 'star-scal' + this.starSize;
   	}
-  },
-  methods:{
-  	
-  },
-  created() {
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.star-box{
-	width: 3rem;
-	overflow: hidden;
-	height: 0.4rem;
-	span{
-		float: left;
-		margin: 0rem 0.1rem;
-		width: 0.4rem;
-		height: 0.4rem;
-	}
-	.star-on{
-		/*background: yellowgreen;*/
-		/*background: url(../../../../static/images/star03.png);*/
-		background-size: 0.4rem 0.4rem;
-	}
-	.star-half{
-		/*background: cornflowerblue;*/
-		/*background: url(../../../../static/images/star02.png);*/
-		background-size: 0.4rem 0.4rem;
-	}
-	.star-off{
-		/*background: royalblue;*/
-		/*background: url(../../../../static/images/star01.png);*/
-		background-size: 0.4rem 0.4rem;
-	}
-}
+@import 'star.scss';
 </style>

@@ -26,14 +26,17 @@
 					  			<label>{{_time(item.rateTime)}}</label>
 					  		</div>
 					  		<div v-if="isOut.star" class="star">
-					  			<v-star
-					  				:starNum="item.score"
-					  				></v-star>
-					  			<span>{{item.deliveryTime}}</span>
+					  			<div class="starcom">
+						  			<v-star
+						  				:starSize="3"
+						  				:starNum="item.score"
+						  				></v-star>
+						  			<span>{{item.deliveryTime}}</span>
+					  			</div>
 					  		</div>
 					  		<p v-if="isOut.text">{{item.text}}</p>
 					  		<div class="two" v-if="isOut.common">
-					  			<span>{{item.rateType}}</span>
+					  			<span v-if="item.rateType === 0"></span>
 					  			<div>
 					  				<label v-for="recomme in item.recommend">
 					  					{{recomme}}
@@ -55,8 +58,11 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import Star from "../star/Star"
-import Bscroll from 'better-scroll'
+import Star from "components/multi/star/Star"
+//import util from 'util/util.js'
+//console.log(new Date().getTime());
+//console.log(util.timego(new Date().getTime()));
+
 export default {
 	components:{
 		"v-star":Star
@@ -83,7 +89,8 @@ export default {
 					common:true
 				}
 			}
-		}
+		},
+		resetScroll:""
 	},
 	data(){
 		return {
@@ -95,122 +102,21 @@ export default {
 	methods:{
 		ratename(i,ev){
 				this.active =i;
-				this._rateScroll();
 				this.showindex = i;
+//				this.$emit('resetScroll');
 		},
 		listShow(){
 				this.rateShow = !this.rateShow;
-				this._rateScroll()
 				this.$emit("isshow",this.rateShow);
-		},
-		_rateScroll (){
-			this.rateingScroll = new Bscroll(this.$refs.ratewrapper,{
-				click:true
-			});
 		},
 		_time (time){
 			return time+"lee";
 		}
-	},
-	mounted(){
-		//暂时没有找到 好的办法解决  异步得问题(暂留问题)
-		let timer = setTimeout(() => {
-			this._rateScroll();
-			clearTimeout(timer);
-		},200);
 	}
 }	
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.rate-list{
-	section{
-		overflow: hidden;
-	}
-}
-.ratemain{
-	display: none;
-}
-.rate-box{
-	overflow: hidden;
-	padding: 0 0.2rem;
-	.rate-select{
-		width: 100%;
-		margin:0.1rem 0;
-		overflow:hidden;
-		li{
-			float: left;
-			width:1.2rem;
-			height: 0.4rem;
-			font-size: 0.21rem;
-			line-height: 0.4rem;
-			height: 0.4rem;
-			text-align: center;
-			background: rgba(0,160,220,0.2);
-			margin-left: 0.2rem;
-		}
-		li:nth-of-type(1){
-			margin: 0;
-		}
-		.back{
-			background: rgba(77,85,93,0.2);
-		}
-		.active{
-			background: #00a0dc;
-			color: white;
-		}
-		.active02{
-			background: #4d555d;
-			color: white;
-		}
-	}
-	.isshow{
-		height: 0.5rem;
-		overflow: hidden;
-		span{
-			float: left;
-			background: dodgerblue;
-			height: 0.3rem;
-			width: 0.3rem;
-			margin-top: 0.1rem;
-		}
-		.span-show{
-			background: blueviolet;
-		}
-		p{
-			float: left;
-			width: 5rem;
-			margin-left: 0.1rem;
-			line-height: 0.5rem;
-		}
-	}
-	.rate-container{
-		padding: 0 0.2rem;
-		overflow: hidden;
-		>div{
-			overflow: hidden;
-		}
-		.logo{
-			float: left;
-			img{
-				width: 0.4rem;
-				height: 0.4rem;
-			}
-		}
-		.main{
-			float: left;
-			margin-left: 0.2rem;
-			width: 3rem;
-		}
-	}
-}
-.rate-wrapper{
-	overflow: hidden;
-	width: 100%;
-	height: 4.59rem;
-}
-.rateblock{
-	display: block;
-}
+@import 'rate.scss'
 </style>

@@ -40,7 +40,6 @@ const mutations = {
 	[types.RATINGS_SAW] (state, {saw}) {
 		if(saw){
 			state.rateshow = state.ratings;
-			console.log(state.rateshow);
 		}else{
 			state.rateshow = state.ratings.filter( (o) => o.text );
 		}
