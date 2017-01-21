@@ -1,37 +1,42 @@
 <template>
 	<div class="seller">
 		<div class="title">
-			<div class="left">
-				<p>{{sellers.name}}</p>
-				<div>
-					<v-star
-						:starNum="sellers.score"
-						></v-star>
-					<span>{{sellers.ratingCount}}</span>
-					<label>月售{{sellers.sellCount}}单</label>
+			<section class="title-line">
+				<div class="left">
+					<p>{{sellers.name}}</p>
+					<div>
+						<div class="star-seller">
+						<v-star
+							:starNum="sellers.score"
+							></v-star>
+						</div>	
+						<span>({{sellers.ratingCount}})</span>
+						<label>月售{{sellers.sellCount}}单</label>
+					</div>
 				</div>
-			</div>
-			<div class="right">
-				<div class="heart"></div>
-				<p>收藏</p>
-			</div>
+				<div class="right">
+					<div class="heart"></div>
+					<p>收藏</p>
+				</div>
+			</section>
 			<ul class="seller-nav">
 				<li>
 					<span>起送价</span>
-					<p>{{sellers.minPrice}}元</p>
+					<p><label>{{sellers.minPrice}}</label>元</p>
 				</li>
 				<li>
 					<span>商家配送</span>
-					<p>{{sellers.deliveryPrice}}元</p>
+					<p><label>{{sellers.deliveryPrice}}</label>元</p>
 				</li>
 				<li>
 					<span>平均配送时间</span>
-					<p>{{sellers.deliveryTime}}分钟</p>
+					<p><label>{{sellers.deliveryTime}}</label>分钟</p>
 				</li>
 			</ul>
-			<div class="active">
+			<div class="clear-line"></div>
+			<div class="activet">
 				<div class="text">
-					<h4>公告与活动</h4>
+					<h3>公告与活动</h3>
 					<p>{{sellers.bulletin}}</p>
 				</div>
 				<div>
@@ -41,7 +46,8 @@
 			<div class="store">
 				
 			</div>
-			<dl>
+			<div class="clear-line"></div>
+			<dl class="seller-meg">
 				<dt>商家信息</dt>
 				<dd v-for="item in sellers.infos">{{item}}</dd>
 			</dl>
@@ -79,55 +85,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.seller{
-	padding: 0 0.2rem;
-	.title{
-		width: 100%;
-		overflow: hidden;
-		.left{
-			float: left;
-			width: 50%;
-			line-height: 0.4rem;
-			p{
-				width: 100%
-			}
-			div{
-				width: 100%;
-			}
-		}
-		.right{
-			width: 50%;
-			float: left;
-			.heart{
-				width: 0.4rem;
-				height: 0.4rem;
-				margin: auto;
-				background: red;
-			}
-			p{
-				width: 100%;
-				text-align: center;
-			}
-		}
-	}
-}
-.seller-nav{
-	width: 100%;
-	overflow: hidden;
-	li{
-		float: left;
-		width: 33.2%;
-		text-align: center;
-		*{
-			width: 100%;
-		}
-		span{
-			float: left;
-		}
-		p{
-			float: left;
-			text-align: center;
-		}
-	}
-}
+@import './scss/seller.scss'
 </style>
