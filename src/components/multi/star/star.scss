@@ -1,0 +1,33 @@
+@charset "UTF-8";
+.star-box{
+    width: 2.3rem;
+    overflow: hidden;
+    height: 0.4rem;
+    span{
+        float: left;
+        margin: 0rem 0.05rem;
+        width: 0.34rem;
+        height: 0.34rem;
+    }
+    .star-on{
+        background: url(on.png) no-repeat center;
+        background-size: 0.34rem 0.34rem;
+    }
+    .star-half{
+        background: url(half.png) no-repeat center;
+        background-size: 0.34rem 0.34rem;
+    }
+    .star-off{
+        background: url(off.png) no-repeat center;
+        background-size: 0.34rem 0.34rem;
+    }
+}
+.star-scal1{
+    -webkit-transform: scale(1);
+}
+.star-scal2{
+    -webkit-transform: scale(1.2);
+}
+.star-scal3{
+    -webkit-transform: scale(0.6);
+}
